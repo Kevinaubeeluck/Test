@@ -23,6 +23,7 @@ $$Figure \ 1$$
 <br />
 <br />
 Unit was implemented as a ram array but the address must be driven with a 32 bit input(Fig. 1) which was problematic with how I initially implemented the size of the ram array using the address width parameter(Fig. 2).
+<br />
 ![[k_fig2.png]](../images/kevin/k_fig2.png)
 <br />
 $$Figure  \ 2$$
@@ -33,6 +34,7 @@ The simplest way to solve it was to simply use data width as the sole parameter(
 ![[k_fig3.png]](../images/kevin/k_fig3.png)
 <br />
 $$Figure \ 3$$
+<br />
 <br />
 The main problem with this memory implementation is Verilog creates a  $2^{32}$ bit memory space(approx. 4gb) which will ended up in the system not posting. Looking at the memory map, I truncated the data memory to be much smaller and properly loaded in the pdf array(fig. 4).
 <br />
