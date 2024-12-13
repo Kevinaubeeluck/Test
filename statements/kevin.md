@@ -108,7 +108,7 @@ This fixes the lw data hazard because we stall for long enough to load the updat
 
 ### Stalls and flushes(beq)
 
-![[k_fig13.png]](../images/kevin/k_fig13.png)
+![[k_fig13.png]](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig13.png)
 $$Figure \ 13$$
 
 ```$
