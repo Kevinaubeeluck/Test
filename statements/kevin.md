@@ -148,7 +148,7 @@ We cut the hazard unit down to just forwarding and abandoned stalling and flush 
 
 We did not have to consider beq hazards as due to being calculated in the execute stage(fig. 15), we only get a 1 cycle stall hence no need to relocate it to the decode meaning we can disregard the second forwarding.  Using trigger as the stall implements the stall for the 2 cycle lw delay and the reset being used as a flush works due to it being a 1 cycle stall.
 
-![[k_fig15.png]](../images/kevin/k_fig20.png)
+![[k_fig15.png]](../images/kevin/k_img/k_fig20.png)
 $$Figure \ 16$$
 
 
