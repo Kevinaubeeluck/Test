@@ -17,9 +17,8 @@
 ## Data memory
 
 ![](../images/kevin/k_fig1.png)
-
-
 $$Figure \ 1$$
+<br />
 <br />
 Unit was implemented as a ram array but the address must be driven with a 32 bit input(Fig. 1) which was problematic with how I initially implemented the size of the ram array using the address width parameter(Fig. 2).
 ![[k_fig2.png]](../images/kevin/k_fig2.png)
@@ -32,13 +31,14 @@ $$Figure \ 3$$
 <br />
 The main problem with this memory implementation is Verilog creates a  $2^{32}$ bit memory space(approx. 4gb) which will ended up in the system not posting. Looking at the memory map, I truncated the data memory to be much smaller and properly loaded in the pdf array(fig. 4).
 
-![[k_fig4.png]](../images/kevin/k_fig4.png)
+![[k_fig4.png]](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig4.png)
 $$Figure \ 4$$
 ##  Memory top
 
 Using the google test suite to write the test for the memory top module was mostly seamless except for testing interconnect wires. Due to not being an input or an output, I couldn't add it as a test. While this wasn't as much of a problem now due to this being the only interconnect, it would prove to be much more annoying further down the line with pipelining
 
-![[k_fig5.png]]![(../images/kevin/k_fig5.png)](https://github.com/Kevinaubeeluck/Test/blob/main/images/kevin/k_fig5.png)
+![[k_fig5]](https://github.com/Kevinaubeeluck/Test/blob/main/images/kevin/k_fig5.png)
+<br />
 $$Figure \ 5$$
 ## F1 vbuddy testbench
 
@@ -83,7 +83,7 @@ This fixes the lw data hazard because we stall for long enough to load the updat
 
 ### Stalls and flushes(beq)
 
-![[k_fig13.png]](../images/kevin/k_fig13.png)
+![[k_fig13.png]](![../images/kevin/k_fig13.png](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig13.png))
 $$Figure \ 13$$
 
 ```$
