@@ -95,6 +95,7 @@ Lwstall controls StallF, StallD and FlushE and is a 1 whenever we load a word (R
 
 
 ![[k_fig11.png]](../images/kevin/k_fig11.png)
+<br />
 $$Figure \ 11$$
 <br />
 <br />
@@ -122,6 +123,7 @@ branchstall = (BranchD  && RegWriteE  && (WriteRegE == Rs1D || WriteRegE == Rs
 
 $$Figure \ 14$$
 <br />
+<br />
 We have to stall in cases of branch misprediction and moving an equality checker(fig. 13) to decode allows us to stall for only 1 cycle instead of 3. The equality checker introduces a raw data hazard which is solved very easily with data forwarding making the first two lines(fig. 14) standard forwarding.
 
 The branch stall checks for branching ($BranchD$) , checks if we write our result ($RegWriteE$) and then checks if we are using a register just modified ($WriteRegE == Rs1D || WriteRegE  == Rs2D$).
@@ -129,14 +131,24 @@ The second line implements the same thing with the difference being it occurring
 
 ## Hazard Unit(cut down) 
 
-![[k_fig14.png]](../images/kevin/k_fig14.png)
+```$
+    always_comb begin
+        if ( (Rs1E == RdM) & RegWriteM )        ForwardAE = 2'b10;
+        else if ( (Rs1E == RdW) & RegWriteW )   ForwardAE = 2'b01;
+        else                                    ForwardAE = 2'b00;
+
+        if ( (Rs2E == RdM) & RegWriteM )        ForwardBE = 2'b10;
+        else if ( (Rs2E == RdW) & RegWriteW )   ForwardBE = 2'b01;
+        else                                    ForwardBE = 2'b00;
+    end
+```
 $$Figure \ 15$$
 
 We cut the hazard unit down to just forwarding and abandoned stalling and flush as we determined we could just flush the instruction depending on the external inputs to the cpu(trigger mapping to stall and reset mapping to flush). 
 
 We did not have to consider beq hazards as due to being calculated in the execute stage(fig. 15), we only get a 1 cycle stall hence no need to relocate it to the decode meaning we can disregard the second forwarding.  Using trigger as the stall implements the stall for the 2 cycle lw delay and the reset being used as a flush works due to it being a 1 cycle stall.
 
-![[k_fig15.png]](../images/kevin/k_fig15.png)
+![[k_fig15.png]](../images/kevin/k_fig20.png)
 $$Figure \ 16$$
 
 
