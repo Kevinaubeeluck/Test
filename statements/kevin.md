@@ -31,6 +31,7 @@ The simplest way to solve it was to simply use data width as the sole parameter(
 $$Figure \ 3$$
 <br />
 The main problem with this memory implementation is Verilog creates a  $2^{32}$ bit memory space(approx. 4gb) which will ended up in the system not posting. Looking at the memory map, I truncated the data memory to be much smaller and properly loaded in the pdf array(fig. 4).
+<br />
 
 ![[k_fig4.png]](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig10.png)
 $$Figure \ 4$$
