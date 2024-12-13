@@ -52,7 +52,10 @@ $$Figure \ 5$$
 Testbench was based on the overall top module of the CPU and the main diagram(fig. 6). Trigger was set to be 1 such that the programme would run as soon as the programme starts. Then we mapped the trigger to the vbuddy flag, notably, we had to use the inverse to keep trigger at 1 past initialisation as vbuddy flag is 0 initially. Inverting the flag doesn't change functionality and it still works as an "on" "off" button
 
 ![[k_fig6.png]](../images/kevin/k_fig6.png)
+<br />
 $$Figure \ 6$$
+<br />
+<br />
 Mistakenly, I had thought that I would have to  mask a0 with 0xFFFF as it was now 32 bit compared to the 16 bit value used in lab 3. After reading the vbuddy.cpp, I saw that it was only (7:0) that were used to display the LEDs and by using 0xFFFF, I was incorrectly using (15:0).
 
 # Pipelined
@@ -65,26 +68,40 @@ Originally, the hazard unit had data forwarding, stalls and flushes for RAW data
 ### Data forwarding 
 
 ![[k_fig7.png]](../images/kevin/k_fig7.png)
-
+<br />
 $$Figure \ 7$$
+<br />
+<br />
 ![[k_fig8.png]](../images/kevin/k_fig8.png)
+<br />
 $$Figure \ 8$$
+<br />
+<br />
 Above(fig.7/8) is details the basic logic of forwarding between the Execute and Memory stages. A multiplexer is introduced into the execute stage such that we can decide to route the previous ALU calculation through controlling of ForwardAE/BE. The multiplexer takes 3 inputs, register carry from decode, carry from memory and carry from writeback allowing for forwarding from both stages.
 
 ### Stalls and flushes(lw)
 
-![[k_fig9.png]](../images/kevin/k_fig9.png)$$Figure \ 9$$
-![[k_fig10.png]](../images/kevin/k_fig10.png)$$Figure \ 10$$
+![[k_fig9.png]](../images/kevin/k_fig9.png)
+<br />
+$$Figure \ 9$$
+<br />
+<br />
+![[k_fig10.png]](../images/kevin/k_fig10.png)
+<br />
+$$Figure \ 10$$
+<br />
+<br />
 Lwstall controls StallF, StallD and FlushE and is a 1 whenever we load a word (ResultSrcE = 2b'01, from the RISC-V I-type load instruction) and if either Rs1D or Rs2D is equal to the RS1E, then we forward(fig.8). The first condition is self explanatory but the second condition is actually due modified due to the RISCV instruction set for load(fig. 11 & 12).  The location where the memory location is only dependant on rs1 so it presents a data hazard hence we check for equality for forwarding.
 
 
 ![[k_fig11.png]](../images/kevin/k_fig11.png)
-
 $$Figure \ 11$$
+<br />
 <br />
 ![[k_fig12.png]](../images/kevin/k_fig12.png)
 <br />
 $$Figure \ 12$$
+<br />
 <br />
 This fixes the lw data hazard because we stall for long enough to load the updated word and we put our execute stage in a bubble through the flush.
 
