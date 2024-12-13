@@ -21,9 +21,13 @@
 
 $$Figure \ 1$$
 <br />
+<br />
 Unit was implemented as a ram array but the address must be driven with a 32 bit input(Fig. 1) which was problematic with how I initially implemented the size of the ram array using the address width parameter(Fig. 2).
 ![[k_fig2.png]](../images/kevin/k_fig2.png)
+<br />
 $$Figure  \ 2$$
+<br />
+<br />
 The simplest way to solve it was to simply use data width as the sole parameter(Fig. 3) and have my address input be 32 bit. Despite being a clunkier interaction to due unused bits, it saved a lot of trouble when it came to the top module.
 
 ![[k_fig3.png]](../images/kevin/k_fig3.png)
