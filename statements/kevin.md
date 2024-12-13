@@ -39,14 +39,11 @@ $$Figure \ 3$$
 The main problem with this memory implementation is Verilog creates a  $2^{32}$ bit memory space(approx. 4gb) which will ended up in the system not posting. Looking at the memory map, I truncated the data memory to be much smaller and properly loaded in the pdf array(fig. 4).
 <br />
 
-![[k_fig4.png]](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig10.png)
-$$Figure \ 4$$
+
 ##  Memory top
 
 Using the google test suite to write the test for the memory top module was mostly seamless except for testing interconnect wires. Due to not being an input or an output, I couldn't add it as a test. While this wasn't as much of a problem now due to this being the only interconnect, it would prove to be much more annoying further down the line with pipelining
 
-![[k_fig5.png]](../images/kevin/k_fig5.png)
-$$Figure \ 5$$
 ## F1 vbuddy testbench
 
 Testbench was based on the overall top module of the CPU and the main diagram(fig. 6). Trigger was set to be 1 such that the programme would run as soon as the programme starts. Then we mapped the trigger to the vbuddy flag, notably, we had to use the inverse to keep trigger at 1 past initialisation as vbuddy flag is 0 initially. Inverting the flag doesn't change functionality and it still works as an "on" "off" button
@@ -108,8 +105,7 @@ This fixes the lw data hazard because we stall for long enough to load the updat
 
 ### Stalls and flushes(beq)
 
-![[k_fig13.png]](https://raw.githubusercontent.com/Kevinaubeeluck/Test/refs/heads/main/images/kevin/k_fig13.png)
-$$Figure \ 13$$
+
 
 ```$
 ForwardAD = (Rs1D != 0)  && (Rs1D == WriteRegM)  && RegWriteM;
@@ -124,7 +120,7 @@ branchstall = (BranchD  && RegWriteE  && (WriteRegE == Rs1D || WriteRegE == Rs
 $$Figure \ 14$$
 <br />
 <br />
-We have to stall in cases of branch misprediction and moving an equality checker(fig. 13) to decode allows us to stall for only 1 cycle instead of 3. The equality checker introduces a raw data hazard which is solved very easily with data forwarding making the first two lines(fig. 14) standard forwarding.
+We have to stall in cases of branch misprediction and moving an equality checker to decode allows us to stall for only 1 cycle instead of 3. The equality checker introduces a raw data hazard which is solved very easily with data forwarding making the first two lines(fig. 14) standard forwarding.
 
 The branch stall checks for branching ($BranchD$) , checks if we write our result ($RegWriteE$) and then checks if we are using a register just modified ($WriteRegE == Rs1D || WriteRegE  == Rs2D$).
 The second line implements the same thing with the difference being it occurring in the memory section rather than the execute. Note that ResultSrcM = 2'b01 when we branch
@@ -146,10 +142,8 @@ $$Figure \ 15$$
 
 We cut the hazard unit down to just forwarding and abandoned stalling and flush as we determined we could just flush the instruction depending on the external inputs to the cpu(trigger mapping to stall and reset mapping to flush). 
 
-We did not have to consider beq hazards as due to being calculated in the execute stage(fig. 15), we only get a 1 cycle stall hence no need to relocate it to the decode meaning we can disregard the second forwarding.  Using trigger as the stall implements the stall for the 2 cycle lw delay and the reset being used as a flush works due to it being a 1 cycle stall.
+We did not have to consider beq hazards as due to being calculated in the execute stage, we only get a 1 cycle stall hence no need to relocate it to the decode meaning we can disregard the second forwarding.  Using trigger as the stall implements the stall for the 2 cycle lw delay and the reset being used as a flush works due to it being a 1 cycle stall.
 
-![[k_fig15.png]](../images/kevin/k_img/k_fig20.png)
-$$Figure \ 16$$
 
 
 # Integration Tests(asm)
